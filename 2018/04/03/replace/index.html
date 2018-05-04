@@ -79,20 +79,21 @@
 
 
 
-<meta name="description" content="前几天朋友问到一个聊天系统，需要代替 [表情] ,趁这次机会仔细研究了replace方法,分享下js的replace用法。 初级篇replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。;">
+<meta name="description" content="前几天朋友问到一个聊天系统，需要代替 [表情] ,趁这次机会仔细研究了replace方法,分享下js的replace用法。 初级篇replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。  1234let strObj = &apos;hello word&apos;;let str = strObj.replace(&apos;l&apos;, &apos;A&apos;);console.log(strObj)">
 <meta name="keywords" content="js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="replace">
-<meta property="og:url" content="http://yoursite.com/child/2018/04/03/replace/index.html">
-<meta property="og:site_name" content="kefirLily">
-<meta property="og:description" content="前几天朋友问到一个聊天系统，需要代替 [表情] ,趁这次机会仔细研究了replace方法,分享下js的replace用法。 初级篇replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。;">
+<meta property="og:title" content="replace方法深入学习">
+<meta property="og:url" content="http://yoursite.com/2018/04/03/replace/index.html">
+<meta property="og:site_name" content="墨痕">
+<meta property="og:description" content="前几天朋友问到一个聊天系统，需要代替 [表情] ,趁这次机会仔细研究了replace方法,分享下js的replace用法。 初级篇replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。  1234let strObj = &apos;hello word&apos;;let str = strObj.replace(&apos;l&apos;, &apos;A&apos;);console.log(strObj)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/child/2018/04/03/replace/replace_1.png">
-<meta property="og:updated_time" content="2018-05-03T15:16:04.568Z">
+<meta property="og:image" content="http://yoursite.com/2018/04/03/replace/replace_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/03/replace/replace_2.png">
+<meta property="og:updated_time" content="2018-05-04T14:38:56.819Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="replace">
-<meta name="twitter:description" content="前几天朋友问到一个聊天系统，需要代替 [表情] ,趁这次机会仔细研究了replace方法,分享下js的replace用法。 初级篇replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。;">
-<meta name="twitter:image" content="http://yoursite.com/child/2018/04/03/replace/replace_1.png">
+<meta name="twitter:title" content="replace方法深入学习">
+<meta name="twitter:description" content="前几天朋友问到一个聊天系统，需要代替 [表情] ,趁这次机会仔细研究了replace方法,分享下js的replace用法。 初级篇replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。  1234let strObj = &apos;hello word&apos;;let str = strObj.replace(&apos;l&apos;, &apos;A&apos;);console.log(strObj)">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/03/replace/replace_1.png">
 
 
 
@@ -122,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/child/2018/04/03/replace/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/03/replace/"/>
 
 
 
 
 
-  <title>replace | kefirLily</title>
+  <title>replace方法深入学习 | 墨痕</title>
   
 
 
@@ -158,12 +159,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">kefirLily</span>
+        <span class="site-title">墨痕</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle">墨影</p>
+        <p class="site-subtitle">用墨记录成长的痕迹</p>
       
   </div>
 
@@ -293,7 +294,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/child/2018/04/03/replace/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/03/replace/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wjf">
@@ -302,7 +303,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="kefirLily">
+      <meta itemprop="name" content="墨痕">
     </span>
 
     
@@ -310,7 +311,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">replace</h1>
+          <h1 class="post-title" itemprop="name headline">replace方法深入学习</h1>
         
 
         <div class="post-meta">
@@ -332,6 +333,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -361,7 +384,20 @@
 
       
         <p>前几天朋友问到一个聊天系统，需要代替 [表情] ,趁这次机会仔细研究了replace方法,分享下js的replace用法。</p>
-<h2 id="初级篇"><a href="#初级篇" class="headerlink" title="初级篇"></a>初级篇</h2><p>replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。<br><img src="/child/2018/04/03/replace/replace_1.png" alt="文档">;</p>
+<h3 id="初级篇"><a href="#初级篇" class="headerlink" title="初级篇"></a>初级篇</h3><p>replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。</p>
+<p><img src="/2018/04/03/replace/replace_1.png" alt="文档"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> strObj = <span class="string">'hello word'</span>;</span><br><span class="line"><span class="keyword">let</span> str = strObj.replace(<span class="string">'l'</span>, <span class="string">'A'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(strObj);　　<span class="comment">// hello word</span></span><br><span class="line"><span class="built_in">console</span>.log(str);　　　　<span class="comment">// heAlo word</span></span><br></pre></td></tr></table></figure>
+<p>代码中只将第一个l代替成A，如果想全部替换：<br>就要使用正则表达式匹配，不会正则表达式的童鞋请先学习正则：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> strObj = <span class="string">'hello word'</span>;</span><br><span class="line"><span class="keyword">let</span> str = strObj.replace(<span class="regexp">/l/g</span>, <span class="string">'A'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(strObj);　　<span class="comment">// hello word</span></span><br><span class="line"><span class="built_in">console</span>.log(str);　　　　<span class="comment">// heAAo word</span></span><br></pre></td></tr></table></figure>
+<h3 id="高级篇"><a href="#高级篇" class="headerlink" title="高级篇"></a>高级篇</h3><p>第一步先仔细看文档<br><img src="/2018/04/03/replace/replace_2.png" alt="文档"></p>
+<h4 id="1-2…用法"><a href="#1-2…用法" class="headerlink" title="$1,$2…用法"></a>$1,$2…用法</h4><p>将手机号15516661777替换成为155****1777；</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> phone = <span class="string">'15516661777'</span>;</span><br><span class="line"><span class="keyword">let</span> str = phone.replace(<span class="regexp">/^(\d&#123;3&#125;)\d&#123;4&#125;(\d&#123;4&#125;)$/</span>, <span class="string">'$1****$2'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(phone);　　<span class="comment">// 15516661777</span></span><br><span class="line"><span class="built_in">console</span>.log(str);　　　<span class="comment">// 155****1777</span></span><br></pre></td></tr></table></figure>
+<h4 id="amp-用法"><a href="#amp-用法" class="headerlink" title="$&amp;用法"></a>$&amp;用法</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'hello word'</span>;</span><br><span class="line"><span class="keyword">let</span> newStr = str.replace(<span class="regexp">/he/</span>, <span class="string">'$&amp;---'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newStr); <span class="comment">// he---llo word</span></span><br><span class="line"><span class="comment">// $&amp;表示正则所匹配的字符串</span></span><br></pre></td></tr></table></figure>
+<h4 id="’用法"><a href="#’用法" class="headerlink" title="$`,$’用法"></a>$`,$’用法</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> st = <span class="string">'hello word'</span>;</span><br><span class="line"><span class="keyword">let</span> a = str.replace(<span class="regexp">/ll/</span>, <span class="string">'$`---'</span>);</span><br><span class="line"><span class="keyword">let</span> b = str.replace(<span class="regexp">/ll/</span>, <span class="string">'$\'---'</span>); <span class="comment">// 我这里使用的是单引号，需要转义，不懂的请先了解js基础</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// hehe---o word</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// heo word---o word</span></span><br><span class="line"><span class="comment">// $`表示所匹配字符串左侧字符，$'表示所匹配字符串右侧字符</span></span><br></pre></td></tr></table></figure>
+<p>$$是量词，间接的说就是直接转义$输出,就不在过多的介绍</p>
+<h3 id="第二个参数是回掉函数的时候"><a href="#第二个参数是回掉函数的时候" class="headerlink" title="第二个参数是回掉函数的时候"></a>第二个参数是回掉函数的时候</h3><p>上例子理解的快，<br>问题：需要将字符串‘你好[吃饭][开心][高兴][知识]’中的’[…]’替换为指定内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'你好[吃饭][开心][高兴][知识]'</span>;</span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  <span class="string">'吃饭'</span>: <span class="string">'A'</span>,</span><br><span class="line">  <span class="string">'开心'</span>: <span class="string">'B'</span>,</span><br><span class="line">  <span class="string">'高兴'</span>: <span class="string">'D'</span>,</span><br><span class="line">  <span class="string">'知识'</span>: <span class="string">'C'</span></span><br><span class="line">&#125;; <span class="comment">// 使用中文做键，不推荐</span></span><br><span class="line"><span class="keyword">let</span> newStr = str.replace(<span class="regexp">/\[.*?\]/g</span>, (a, b, c) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 参数a，正则匹配到的内容</span></span><br><span class="line">  <span class="comment">// 其他参数有点多变</span></span><br><span class="line">  <span class="comment">// 如果正则中没有括号，b将表示开始匹配的位置，如果有括号，为括号匹配到的内容</span></span><br><span class="line">  <span class="comment">// 最后一个参数(不是表示第三个参数)表示str；</span></span><br><span class="line">  <span class="built_in">console</span>.log(a);</span><br><span class="line">  <span class="comment">// [吃饭]</span></span><br><span class="line">  <span class="comment">// [开心]</span></span><br><span class="line">  <span class="comment">// [高兴]</span></span><br><span class="line">  <span class="comment">// [知识]</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(newStr); <span class="comment">// 你好ABDC</span></span><br></pre></td></tr></table></figure>
+<p>replace方法就写到这里了，欢迎指正，大神勿喷.</p>
 
       
     </div>
@@ -472,6 +508,15 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
             
               
@@ -521,7 +566,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初级篇"><span class="nav-number">1.</span> <span class="nav-text">初级篇</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#初级篇"><span class="nav-number">1.</span> <span class="nav-text">初级篇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级篇"><span class="nav-number">2.</span> <span class="nav-text">高级篇</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2…用法"><span class="nav-number">2.1.</span> <span class="nav-text">$1,$2…用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-用法"><span class="nav-number">2.2.</span> <span class="nav-text">$&amp;用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#’用法"><span class="nav-number">2.3.</span> <span class="nav-text">$`,$’用法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二个参数是回掉函数的时候"><span class="nav-number">3.</span> <span class="nav-text">第二个参数是回掉函数的时候</span></a></li></ol></div>
             
 
           </div>
