@@ -14,6 +14,45 @@ tags: [js, vue]
 
 上一篇讲解了vue-cli的使用，这一片讲解vue项目的配置文件，如果还不会vue-cli构建项目的，请先阅读[Vue入坑之路(一) -- vue-cli](../vue-cli)  
 
+
+
+#### package.json
+
+**json文件不支持注释，请不要在json中注释，**
+
+```
+{
+  "name": "vue-demo",         // 项目名称
+  "version": "1.0.0",         // 版本
+  "description": "A Vue.js project",    // 描述
+  "author": "w** <n****a@outlook.com>", // 作者
+  "private": true,
+  "scripts": {
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "start": "npm run dev",
+    "unit": "jest --config test/unit/jest.conf.js --coverage",
+    "e2e": "node test/e2e/runner.js",
+    "test": "npm run unit && npm run e2e",
+    "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
+    "build": "node build/build.js"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
+
+```
+
 #### config/index.js
 
 ```js
