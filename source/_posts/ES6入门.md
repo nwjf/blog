@@ -110,9 +110,28 @@ typeof Point; // function
 ```
 类的数据类型就是函数，类本身就指向构造函数。
 使用的时候，也是直接对类使用new命令，跟构造函数的用法完全一致。
+```js
+// 类的两种方法
+class Foo {
+   // ...
+}
+const f = new Point(); // Uncaught ReferenceError: Foo is not defined(...)
+var Point = class {
+  // ...
+}
+const f = new Point(); // 正确
+```
+类声明和函数声明不同的一点是，函数声明存在变量提升现象，而类声明不会。即，类必须先声明，然后才能使用，否则会抛出ReferenceError异常。
 
 #### 严格模式
 类和模块的内部，默认就是严格模式，所以不需要使用use strict指定运行模式。只要你的代码写在类或模块之中，就只有严格模式可用。
+
+#### constructor
+constructor方法是一个特殊的类方法，它既不是静态方法也不是实例方法，它仅在实例化的时候被调用。一个类只能拥有一个名为constructor的方法，否则会抛出SyntaxError异常.
+
+如果没有定义constructor方法，这个方法会被默认添加，即，不管有没有显示定义，任何一个类都有constructor方法。
+
+子类必须在constructor方法中调用super方法，否则新建实例时会报错。因为子类没有自己的this对象，而是继承父类的this对象，然后对其进行加工，如果不调用super方法，子类就得不到this对象。
 
 #### 静态方法
 
