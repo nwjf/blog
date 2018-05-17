@@ -64,6 +64,9 @@ let arr = [1, 2, 3];
 console.log(arr instanceof Array); // true
 console.log(Array.isArray(arr)); // true
 ```
+
+### 字符串
+
 ### 函数
 ##### 箭头函数
 ###### 基本用法
