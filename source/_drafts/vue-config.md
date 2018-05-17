@@ -5,18 +5,11 @@ categories: vue
 tags: [js, vue]
 ---
 
-文章还在编写当中，为了编写更好的文章，请先阅读其他文章，
-文章还在编写当中，为了编写更好的文章，请先阅读其他文章，
-文章还在编写当中，为了编写更好的文章，请先阅读其他文章，
-文章还在编写当中，为了编写更好的文章，请先阅读其他文章，
-文章还在编写当中，为了编写更好的文章，请先阅读其他文章，
-
-
 上一篇讲解了vue-cli的使用，这一片讲解vue项目的配置文件，如果还不会vue-cli构建项目的，请先阅读[Vue入坑之路(一) -- vue-cli](../vue-cli)  
 
 
 
-#### package.json
+##### package.json
 
 **json文件不支持注释，请不要在json中注释，**
 
@@ -27,6 +20,7 @@ tags: [js, vue]
   "description": "A Vue.js project",    // 描述
   "author": "w** <n****a@outlook.com>", // 作者
   "private": true,
+  // 脚本
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
@@ -36,10 +30,12 @@ tags: [js, vue]
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "build": "node build/build.js"
   },
+  // 依赖
   "dependencies": {
   },
   "devDependencies": {
   },
+  // 引擎版本
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
@@ -50,10 +46,29 @@ tags: [js, vue]
     "not ie <= 8"
   ]
 }
+```
+npm 脚本
+start 命令可以 npm start运行，其他都是npm run ...运行
+1.执行npm start
+  &nbsp;&nbsp;&nbsp;&nbsp;执行了npm run dev命令
+2.执行npm run dev命令
+  &nbsp;&nbsp;&nbsp;&nbsp;执行了webpack-dev-server --inline --progress --config build/webpack.dev.conf.js
+3.执行npm run build
+  &nbsp;&nbsp;&nbsp;&nbsp;执行了build/build.js文件
 
+了解更多，请查阅npm配置文档 , [点击查看阅读](https://docs.npmjs.com/cli/npm)
+#### vue配置
+
+##### 配置文件结构
+```
+|-- config                   // 项目开发环境配置
+|   |-- dev.env.js           // 开发环境变量
+|   |-- index.js             // 项目一些配置变量
+|   |-- prod.env.js          // 生产环境变量
+|   |-- test.env.js          // 测试环境变量
 ```
 
-#### config/index.js
+##### config/index.js
 
 ```js
 'use strict'
@@ -79,14 +94,14 @@ module.exports = {
     host: 'localhost', // 主机地址
     port: 8080, // 端口
     autoOpenBrowser: true, // 自动打开浏览器
-    errorOverlay: true,
-    notifyOnErrors: true,
-    poll: false,
+    errorOverlay: true, // 查询错误
+    notifyOnErrors: true, // 通知错误
+    poll: false, // 是跟devserver相关的一个配置，webpack为我们提供的devserver是可以监控文件改动的
     useEslint: true, // 开启eslint语法检测
-    showEslintErrorsInOverlay: false,
-    devtool: 'cheap-module-eval-source-map',
-    cacheBusting: true,
-    cssSourceMap: true
+    showEslintErrorsInOverlay: false, // 是否展示eslint的错误提示
+    devtool: 'cheap-module-eval-source-map', // webpack提供的用来方便调试的配置，它有四种模式，可以查看webpack文档了解更多
+    cacheBusting: true, // 一个配合devtool的配置，当给文件名插入新的hash导致清楚缓存时是否生成souce maps，默认在开发环境下为true
+    cssSourceMap: true // 是否开启cssSourceMap
   },
   // 下面是build也就是生产编译环境下的一些配置
   build: {
@@ -100,19 +115,38 @@ module.exports = {
     assetsPublicPath: '/',
     // 下面定义是否生成生产环境的sourcmap，sourcmap是用来debug编译后文件的，通过映射到编译前文件来实现
     productionSourceMap: true,
-    devtool: '#source-map',
+    devtool: '#source-map', // 同上devtool
     // 下面是是否在生产环境中压缩代码，如果要压缩必须安装compression-webpack-plugin
     productionGzip: false,
     // 下面定义要压缩哪些类型的文件
     productionGzipExtensions: ['js', 'css'],
-    bundleAnalyzerReport: process.env.npm_config_report
+    // 是否开启打包后的分析报告
+    bundleAnalyzerReport: process.env.npm_config_report 
   }
 }
 
 ```
 
-#### /build/webpack.base.conf.js
+#### webpack 配置
 
+##### 配置文件结构
+|-- build                            // 项目构建(webpack)相关代码
+|   |-- build.js                     // 生产环境构建代码
+|   |-- check-version.js             // 检查node、npm等版本
+|   |-- dev-client.js                // 热重载相关---新版本没有此文件
+|   |-- dev-server.js                // 构建本地服务器---新版本没有此文件
+|   |-- utils.js                     // 构建工具相关
+|   |-- vue-loader.conf.js           // 处理vue文件的配置文件
+|   |-- webpack.base.conf.js         // webpack基础配置
+|   |-- webpack.dev.conf.js          // webpack开发环境配置
+|   |-- webpack.prod.conf.js         // webpack生产环境配置
+
+##### /build/webpack.base.conf.js
+
+基础配置文件
+1. 配置编译入口和输出路径
+2. 模块resolve的规则
+3. 配置不同类型模块的处理规则
 
 ```js
 'use strict'
@@ -240,7 +274,113 @@ module.exports = {
 }
 
 ```
-#### /build/utils.js
+
+##### /build/webpack.dev.conf.js
+开发配置文件
+1. 合并基础的webpack配置
+2. 使用styleLoaders
+3. 配置Source Maps
+4. 配置webpack插件
+
+```js
+'use strict'
+const utils = require('./utils')
+const webpack = require('webpack')
+const config = require('../config')
+const merge = require('webpack-merge')
+const path = require('path')
+const baseWebpackConfig = require('./webpack.base.conf')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const portfinder = require('portfinder')
+
+const HOST = process.env.HOST
+const PORT = process.env.PORT && Number(process.env.PORT)
+
+const devWebpackConfig = merge(baseWebpackConfig, {
+  module: {
+    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
+  },
+  // cheap-module-eval-source-map is faster for development
+  devtool: config.dev.devtool,
+
+  // these devServer options should be customized in /config/index.js
+  devServer: {
+    clientLogLevel: 'warning',
+    historyApiFallback: {
+      rewrites: [
+        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
+      ],
+    },
+    hot: true,
+    contentBase: false, // since we use CopyWebpackPlugin.
+    compress: true,
+    host: HOST || config.dev.host,
+    port: PORT || config.dev.port,
+    open: config.dev.autoOpenBrowser,
+    overlay: config.dev.errorOverlay
+      ? { warnings: false, errors: true }
+      : false,
+    publicPath: config.dev.assetsPublicPath,
+    proxy: config.dev.proxyTable,
+    quiet: true, // necessary for FriendlyErrorsPlugin
+    watchOptions: {
+      poll: config.dev.poll,
+    }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': require('../config/dev.env')
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
+    new webpack.NoEmitOnErrorsPlugin(),
+    // https://github.com/ampedandwired/html-webpack-plugin
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'index.html',
+      inject: true
+    }),
+    // copy custom static assets
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: config.dev.assetsSubDirectory,
+        ignore: ['.*']
+      }
+    ])
+  ]
+})
+
+module.exports = new Promise((resolve, reject) => {
+  portfinder.basePort = process.env.PORT || config.dev.port
+  portfinder.getPort((err, port) => {
+    if (err) {
+      reject(err)
+    } else {
+      // publish the new Port, necessary for e2e tests
+      process.env.PORT = port
+      // add port to devServer config
+      devWebpackConfig.devServer.port = port
+
+      // Add FriendlyErrorsPlugin
+      devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
+        compilationSuccessInfo: {
+          messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
+        },
+        onErrors: config.dev.notifyOnErrors
+        ? utils.createNotifierCallback()
+        : undefined
+      }))
+
+      resolve(devWebpackConfig)
+    }
+  })
+})
+
+```
+##### /build/utils.js
 
 ```js
 'use strict'
