@@ -2,7 +2,7 @@
 title: 你必须要懂的 ES6 语法
 date: 2018-03-20 08:36:50
 categories: js
-tags: [js, ES6]
+tags: [js, ES6, ES2015]
 ---
 
 ### 简介
@@ -59,6 +59,35 @@ console.log(Array.isArray(arr)); // true
 ```
 
 ### 字符串
+##### 模板字符串
+**( `` )** 反引号来定义模板字符串，
+```js
+// es5
+var msg = 'hello word';
+
+var str1 = '<div>' + msg + '</div>';
+var str2 = '<div>' +
+          '<span>' +
+          '</span>' +
+          '</div>';
+var str3 = '<div>\
+            <span>\
+            </span>\
+            </div>';
+// es6
+var str1 = `<div>${msg}</div>`;
+var str2 = `<div>
+            <span>
+            </span>
+            </div>
+            `;
+```
+**注意**
+1. 如果在模板字符串中需要使用反引号，则前面要用反斜杠转义
+2. 如果使用模板字符串表示多行字符串，所有的空格和缩进都会被保留在输出之中。
+3. 模板字符串中嵌入变量，需要将变量名写在${}之中。
+4. 大括号内部可以放入任意的 JavaScript 表达式，可以进行运算，以及引用对象属性。
+5. 如果模板字符串中的变量没有声明，将报错。
 
 ### 函数
 ##### 箭头函数
@@ -88,6 +117,60 @@ var sum = (num1, num2) => { return num1 + num2; }
 （2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。
 （3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。
 （4）不可以使用yield命令，因此箭头函数不能用作 Generator 函数。
+##### 函数参数，参数默认值
+ES6 之前，不能直接为函数的参数指定默认值，只能采用变通的方法。
+```js
+// es6之前
+function log (x, y) {
+  x = x || 1;
+  y = y || 2;
+  return x + y;
+}
+log(); // 3
+log(2,3) // 5
+// es6
+function log (x = 1, y = 2) {
+  return x + y;
+}
+// 或者
+let log = (x = 1, y = 2) => x + y;
+
+log(); // 3
+log(2,3) // 5
+```
+注意
+1. 使用参数默认值时，函数不能有同名参数。
+2. 参数变量是默认声明的，所以不能用let或const再次声明。
+3. 指定了默认值以后，函数的length属性，将返回没有指定默认值的参数个数。也就是说，指定了默认值后，length属性将失真。
+4. 一旦设置了参数的默认值，函数进行声明初始化时，参数会形成一个单独的作用域（context）。等到初始化结束，这个作用域就会消失。这种语法行为，在不设置参数默认值时，是不会出现的。
+
+函数参数
+```js
+// es6之前
+function sum () {
+  var s = 0;
+  for (var i in arguments) {
+    s += arguments[i]
+  }
+  console.log(s);
+}
+sum(1,2,3,4,5,6); // 21
+
+// es6
+function sum (...num) {
+  var s = 0;
+  for (var i in num) {
+    s += num[i];
+  }
+  console.log(s);
+}
+sum(1,2,3,4,5,6); // 21
+```
+注意
+1. arguments对象不是数组，而是一个类似数组的对象。所以为了使用数组的方法，必须使用Array.prototype.slice.call先将其转为数组。
+2. rest 参数之后不能再有其他参数（即只能是最后一个参数），否则会报错。
+3. 函数的length属性，不包括 rest 参数。
+4. 只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式，否则会报错。
 
 ### class
 
