@@ -160,11 +160,11 @@ file-loader和url-loader的区别：以图片为例，file-loader可对图片进
 ### vue 配置
 #### 配置文件结构
 ```
-|-- config                   // 项目开发环境配置
-|   |-- dev.env.js           // 开发环境变量
-|   |-- index.js             // 项目一些配置变量
-|   |-- prod.env.js          // 生产环境变量
-|   |-- test.env.js          // 测试环境变量
+|-- config             // 项目开发环境配置
+|   |-- dev.env.js     // 开发环境变量
+|   |-- index.js       // 项目一些配置变量
+|   |-- prod.env.js    // 生产环境变量
+|   |-- test.env.js    // 测试环境变量
 ```
 #### config/index.js
 config内的文件其实是服务于build的，大部分是定义一个变量export出去。
@@ -251,16 +251,18 @@ module.exports = {
 
 ### webpack 配置
 #### 配置文件结构
-|-- build                            // 项目构建(webpack)相关代码
-|   |-- build.js                     // 生产环境构建代码
-|   |-- check-version.js             // 检查node、npm等版本
-|   |-- dev-client.js                // --热重载相关---新版本没有此文件
-|   |-- dev-server.js                // --构建本地服务器---新版本没有此文件
-|   |-- utils.js                     // 构建工具相关
-|   |-- vue-loader.conf.js           // 处理vue文件的配置文件
-|   |-- webpack.base.conf.js         // webpack基础配置
-|   |-- webpack.dev.conf.js          // webpack开发环境配置
-|   |-- webpack.prod.conf.js         // webpack生产环境配置
+```
+|-- build                      // 项目构建(webpack)相关代码
+|   |-- build.js               // 生产环境构建代码
+|   |-- check-version.js       // 检查node、npm等版本
+|   |-- dev-client.js          // --热重载相关---新版本没有此文件
+|   |-- dev-server.js          // --构建本地服务器---新版本没有此文件
+|   |-- utils.js               // 构建工具相关
+|   |-- vue-loader.conf.js     // 处理vue文件的配置文件
+|   |-- webpack.base.conf.js   // webpack基础配置
+|   |-- webpack.dev.conf.js    // webpack开发环境配置
+|   |-- webpack.prod.conf.js   // webpack生产环境配置
+```
 #### /build/build.js
 该文件作用，即构建生产版本。package.json中的scripts的build就是node build/build.js，输入命令行npm run build对该文件进行编译生成生产环境的代码
 ```js
