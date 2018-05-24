@@ -11,6 +11,16 @@ ECMAScript 6.0 (简称ES6) ，ES6 的第一个版本，在 2015 年 6 月发布�
 ### 参考
 阮一峰 [《ECMAScript 6 入门》](http://es6.ruanyifeng.com/)
 
+### 站点目录
+[1. let/const](#letconst)
+[2. 字符串](#string)
+[3. 函数](#function)
+[4. 类class基本用法](#class)
+
+
+
+<a id="letconst"></a>
+
 ### let/const
 ES6 中新增加了 let 和 const 两个命令，let用于定义变量，const 用于定义常量, 与var的不同之处在于let，const都是块级作用域，具体请看代码
 
@@ -58,6 +68,9 @@ console.log(arr instanceof Array); // true
 console.log(Array.isArray(arr)); // true
 ```
 
+
+<a id="string"></a>
+
 ### 字符串
 ##### 模板字符串
 **( `` )** 反引号来定义模板字符串，
@@ -89,6 +102,8 @@ var str2 = `<div>
 4. 大括号内部可以放入任意的 JavaScript 表达式，可以进行运算，以及引用对象属性。
 5. 如果模板字符串中的变量没有声明，将报错。
 
+<a id="function"></a>
+
 ### 函数
 ##### 箭头函数
 ###### 基本用法
@@ -112,11 +127,12 @@ var sum = function(num1, num2) {
 // 如果箭头函数的代码块部分多于一条语句，就要使用大括号将它们括起来，并且使用return语句返回。
 var sum = (num1, num2) => { return num1 + num2; }
 ```
-**注意点**
+注意点
 （1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。
 （2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。
 （3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。
 （4）不可以使用yield命令，因此箭头函数不能用作 Generator 函数。
+
 ##### 函数参数，参数默认值
 ES6 之前，不能直接为函数的参数指定默认值，只能采用变通的方法。
 ```js
@@ -172,7 +188,9 @@ sum(1,2,3,4,5,6); // 21
 3. 函数的length属性，不包括 rest 参数。
 4. 只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式，否则会报错。
 
-### class
+<a id="class"></a>
+
+### class基本用法
 
 #### 基本用法
 ES6 提供了更接近传统语言的写法，引入了 Class（类）这个概念，作为对象的模板。通过class关键字，可以定义类。
@@ -217,25 +235,64 @@ constructor方法是一个特殊的类方法，它既不是静态方法也不是
 类相当于实例的原型，所有在类中定义的方法，都会被实例继承。
 如果在一个方法前，加上static关键字，就表示该方法不会被实例继承，而是直接通过类来调用，这就称为“静态方法”。
 
+
+
 ```js
 // 静态方法
 class Foo {
-  static classMethods () {
+  static toString () {
     console.log('我是静态方法');
   }
   point () {
     console.log('我不是静态方法');
   }
+  log () {
+    console.log('我是输出方法');
+  }
 }
-Foo.classMethods(); // 我是静态方法
+class Point extends Foo {
+  log () {
+    console.log('重写父级log方法');
+  }
+}
+
 let f = new Foo();
-f.classMethods(); // TypeError: foo.classMethod is not a function
-f.point(); // 我不是静态方法
+let p = new Point();
+
+Foo.toString(); // 我是静态方法
+f.toString();   // TypeError: f.toString is not a function
+f.point();     // 我不是静态方法
+f.log();       // 我是输出方法
+
+Point.toString(); // 我是静态方法
+p.toString();  // TypeError: p.log is not a function
+p.point();     // 我不是静态方法
+p.log();       // 重写父级log方法
 ```
-**注意**
-1.如果静态方法包含this关键字，这个this指的是类，而不是实例。
-2.静态方法可以与非静态方法重名。
-3.父类的静态方法可以被子类继承。
+注意
+1. 如果静态方法包含this关键字，这个this指的是类，而不是实例。
+2. 静态方法可以与非静态方法重名。
+3. 父类的静态方法可以被子类继承。
+4. ES6 明确规定，Class 内部只有静态方法，没有静态属性。
+
+#### class的getter和setter方法
+
+与 ES5 一样，在“类”的内部可以使用get和set关键字，对某个属性设置存值函数和取值函数，拦截该属性的存取行为。
+
+```js
+class Point {
+  get prop () {
+    console.log('我是get方法');
+  }
+  set prop (value) {
+    console.log('我是set方法---值为 : ' + value);
+  }
+}
+
+let p = new Point();
+p.prop;     // 我是get方法
+p.prop = 'demo'; // 我是set方法---值为 : demo
+```
 
 #### 继承
 
@@ -243,5 +300,6 @@ Class 可以通过extends关键字实现继承，这比 ES5 的通过修改原�
 
 ```js
 class Point {}
-class SubPoint extends Point {}
+class Foo extends Point {}
+// Foo就具有Point的所有方法，相当于复制
 ```
