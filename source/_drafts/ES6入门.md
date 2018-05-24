@@ -303,3 +303,7 @@ class Point {}
 class Foo extends Point {}
 // Foo就具有Point的所有方法，相当于复制
 ```
+
+###### super
+
+super可以理解为是指向自己超（父）类对象的一个指针，而这个超类指的是离自己最近的一个父类。
