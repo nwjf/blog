@@ -16,15 +16,16 @@ ECMAScript 6.0 (简称ES6) ，ES6 的第一个版本，在 2015 年 6 月发布�
 [2. 字符串](#string)
 [3. 函数](#function)
 [4. 类class基本用法](#class)
+[5. export,import](#import)
 
 
 
-<a id="letconst"></a>
+<span id="letconst"></span>
 
 ### let/const
 ES6 中新增加了 let 和 const 两个命令，let用于定义变量，const 用于定义常量, 与var的不同之处在于let，const都是块级作用域，具体请看代码
 
-##### let or var
+#### let or var
 
 ```js
 // var
@@ -39,7 +40,7 @@ if (true) {
 console.log(test); // ReferenceError: test is not defined
 ```
 
-##### const
+#### const
 
 ```js
 // 情况一
@@ -68,12 +69,11 @@ console.log(arr instanceof Array); // true
 console.log(Array.isArray(arr)); // true
 ```
 
-
-<a id="string"></a>
+<span id="string"></span>
 
 ### 字符串
-##### 模板字符串
-**( `` )** 反引号来定义模板字符串，
+#### 模板字符串
+**( \`\` )** 反引号来定义模板字符串，
 ```js
 // es5
 var msg = 'hello word';
@@ -95,18 +95,18 @@ var str2 = `<div>
             </div>
             `;
 ```
-**注意**
+注意
 1. 如果在模板字符串中需要使用反引号，则前面要用反斜杠转义
 2. 如果使用模板字符串表示多行字符串，所有的空格和缩进都会被保留在输出之中。
 3. 模板字符串中嵌入变量，需要将变量名写在${}之中。
 4. 大括号内部可以放入任意的 JavaScript 表达式，可以进行运算，以及引用对象属性。
 5. 如果模板字符串中的变量没有声明，将报错。
 
-<a id="function"></a>
+<span id="function"></span>
 
 ### 函数
-##### 箭头函数
-###### 基本用法
+#### 箭头函数
+##### 基本用法
 
 ```js
 var test = v => v;
@@ -133,7 +133,7 @@ var sum = (num1, num2) => { return num1 + num2; }
 （3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。
 （4）不可以使用yield命令，因此箭头函数不能用作 Generator 函数。
 
-##### 函数参数，参数默认值
+#### 函数参数，参数默认值
 ES6 之前，不能直接为函数的参数指定默认值，只能采用变通的方法。
 ```js
 // es6之前
@@ -188,7 +188,7 @@ sum(1,2,3,4,5,6); // 21
 3. 函数的length属性，不包括 rest 参数。
 4. 只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式，否则会报错。
 
-<a id="class"></a>
+<span id="class"></span>
 
 ### class基本用法
 
@@ -304,6 +304,106 @@ class Foo extends Point {}
 // Foo就具有Point的所有方法，相当于复制
 ```
 
-###### super
+##### super
 
 super可以理解为是指向自己超（父）类对象的一个指针，而这个超类指的是离自己最近的一个父类。
+与this类似，super相当于是指向当前对象的父类，这样就可以用super.xxx来引用父类的成员。
+
+
+###### 当做函数使用
+```js
+class A {}
+class B extends A {
+  constructor() {
+    super(); //ES6 要求，子类的构造函数必须执行一次super函数。
+  }
+}
+```
+注意
+1. super虽然代表了父类A的构造函数，但是返回的是子类B的实例，即super内部的this指的是B，因此super()在这里相当于A.prototype.constructor.call(this)。---在子类普通方法中通过super调用父类的方法时，方法内部的this指向当前的子类实例。
+2. 只能用在构造函数中； 
+3. 在构造函数中用this之前，必须先使用super
+
+###### 当做对象使用
+
+```js
+class A {
+  c() {
+  return 2;
+}
+}
+class B extends A {
+  constructor() {
+    super();
+    console.log(super.c()); // 2
+  }
+}
+let b = new B();
+```
+上面代码中，子类B当中的super.c()，就是将super当作一个对象使用。这时，super在普通方法之中，指向A.prototype，所以super.c()就相当于A.prototype.c()。
+在普通方法中，指向父类的原型对象；在静态方法中，指向父类。
+
+
+
+<span id="import"></span>
+
+
+### import,export
+
+.ES6 模块的设计思想，是尽量的静态化，使得编译时就能确定模块的依赖关系，以及输入和输出的变量。
+
+注意
+
+1. ES6模块默认使用严格模式，无论是否声明“use strict”
+
+2. ES6 模块之中，顶层的this指向undefined，即不应该在顶层代码使用this。
+
+#### export
+
+模块是独立的文件，该文件内部的所有的变量外部都无法获取。如果希望获取某个变量，必须通过export输出，
+
+```js
+// 方法一
+export const a = 1;
+export const b = 2;
+export function toString () {}
+
+// 方法二
+const a = 1;
+const b = 2;
+function toString () {}
+export {a, b, toString};
+
+// 重命名
+const a = 1;
+const b = 2;
+function toString () {}
+export {
+  a as v1,
+  b as v2,
+  toString as v3
+}
+```
+
+#### export default
+
+使用import导入时，都需要知道模块中所要加载的变量名或函数名，用户可能不想阅读源码，只想直接使用接口，就可以用export default命令，为模块指定输出
+```js
+export default function  () {}
+// 加载时
+import toString from './a.js';
+toString();
+```
+注意
+
+export 与 export default的区别： 两者都是对外暴露接口，export可以在模块中多次使用，export default只能出现一次。
+
+#### import
+
+export定义了模块的对外接口后，其他JS文件就可以通过import来加载这个模块，
+
+```js
+import {toString, a, b} from './mo.js';
+```
+
+es6 基础语法就写到这里了，后续还会介绍es6的Promise 的使用方法等，文章节俭与阮大师的es基础入门，如有问题请联系邮箱newwjf@163.com，我会及时回复。
