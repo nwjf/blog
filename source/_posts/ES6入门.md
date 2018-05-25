@@ -403,7 +403,13 @@ export 与 export default的区别： 两者都是对外暴露接口，export可
 export定义了模块的对外接口后，其他JS文件就可以通过import来加载这个模块，
 
 ```js
+// 方法一
+import axios from './axios';
+// 方法二
 import {toString, a, b} from './mo.js';
+// 方法三
+import {a as b, n as c} from './mo.js'; // 对方法重命名
+import * as reg from './reg.js'; // 把所有方法放入到reg对象中
 ```
 
 es6 基础语法就写到这里了，后续还会介绍es6的Promise 的使用方法等，文章节俭与阮大师的es基础入门，如有问题请联系邮箱newwjf@163.com，我会及时回复。

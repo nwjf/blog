@@ -1,6 +1,6 @@
 ---
 title: Vue入坑之路(一) -- vue-cli
-date: 2018-05-05 22:14:13
+date: 2018-04-02 22:14:13
 categories: vue
 tags: [js, vue]
 ---
