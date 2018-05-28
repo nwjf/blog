@@ -66,13 +66,25 @@ $$是量词，间接的说就是直接转义$输出,就不在过多的介绍
 
 ```js
 let str = '你好[吃饭][开心][高兴][知识]';
-let obj = {
-  '吃饭': 'A',
-  '开心': 'B',
-  '高兴': 'D',
-  '知识': 'C'
-}; // 使用中文做键，不推荐
-let newStr = str.replace(/\[.*?\]/g, (a, b, c) => {
+let obj = [
+  {
+    name: '吃饭',
+    img: 'https://kefirlily.github.io/'
+  },
+  {
+    name: '开心',
+    img: 'https://kefirlily.github.io/'
+  },
+  {
+    name: '高兴',
+    img: 'https://kefirlily.github.io/'
+  },
+  {
+    name: '知识',
+    img: 'https://kefirlily.github.io/'
+  },
+]
+let newStr = str.replace(/\[(.*?)\]/g, (a, b, c) => {
   // 参数a，正则匹配到的内容
   // 其他参数有点多变
   // 如果正则中没有括号，b将表示开始匹配的位置，如果有括号，为括号匹配到的内容
@@ -82,6 +94,12 @@ let newStr = str.replace(/\[.*?\]/g, (a, b, c) => {
   // [开心]
   // [高兴]
   // [知识]
+  for (let i in obj) {
+    if (obj[i].name === b) {
+      // 所有的[...]将会被替换成对应的img
+      return obj[i].img;
+    }
+  }
 });
 console.log(newStr); // 你好ABDC
 ```
