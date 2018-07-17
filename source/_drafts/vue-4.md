@@ -183,7 +183,33 @@ export default new Vue();
 ```js
 import eventBus from '../assets/eventBus';
 export default new Vue({
-    name: 'index',
-    
+    name: 'alert',
+    mounted: function () {
+        // 添加事件监听，$on(事件名称, 回掉函数)
+        eventBus.$on('alert', (data) => {});
+        // eventBus.$once('alert', (data) => {}); 只出发一次的事件监听
+    },
+    beforeDestroy: function () {
+        // 移除事件监听
+        eventBus.$off('alert', () => {});
+    }
 })
 ```
+
+三、 事件
+```js
+import eventBus from '../assets/eventBus';
+export default new Vue({
+    name: 'user',
+    mounted: function () {
+        // 事件,
+        // 第一个参数是事件名称
+        // 第二个参数是发送事件所携带的参数
+        evenBus.$emit('alert', {});
+    }
+})
+```
+
+
+希望这篇文章会对你起到一定作用，如有问题请联系
+newwjf@outlook.com/newwjf@163.com
