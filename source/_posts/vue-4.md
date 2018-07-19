@@ -1,6 +1,6 @@
 ---
 title: Vue入坑之路(四) -- 组件
-date: 2018-05-02 22:14:13
+date: 2018-05-20 22:14:13
 categories: vue
 tags: [js, vue]
 ---

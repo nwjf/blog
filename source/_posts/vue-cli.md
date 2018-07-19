@@ -97,6 +97,7 @@ mmended) npm
 |   |-- assets                       // 静态文件，会被webpack处理
 |   |-- components                   // vue公共组件
 |   |-- store                        // vuex的状态管理
+|   |-- router                       // 路由文件
 |   |-- App.vue                      // 页面入口文件
 |   |-- main.js                      // 程序入口文件，加载各种公共组件
 |-- static                           // 静态文件，比如一些图片，json数据等
@@ -108,5 +109,15 @@ mmended) npm
 |-- index.html                       // 入口页面
 |-- package.json                     // 项目基本信息
 ```
+
+### google vue开发插件
+再说一下vue推荐开发插件
+细心阅读过官方文档的童鞋肯定发现文档中推荐了一款Vue.js devtools这样的插件
+
+安装步骤：
+    google插件商店搜索安装就可以了，
+    国内墙很高，访问不到google，网上这方面的文章很多，就不在过多介绍了。
+
+![vue](/vue-cli/2.jpg)
 
 vue-cli 就写到这里了，下一篇会写项目配置文件。
