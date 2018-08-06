@@ -44,7 +44,7 @@ vue-cli init webpack vue_demo
 在这里就讲解webpack模板了
 
 
-```git
+```
 $ vue init webpack vue_demo
 
 ? Project name (vue_demo)------------------项目名称（我这里是vue_demo）
