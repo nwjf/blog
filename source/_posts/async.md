@@ -102,15 +102,28 @@ ES2017 标准引入了 async 函数，使得异步操作变得更加方便。
 
 Async 是定义返回 promise 对象函数的快捷方法。
 
+async如下特点
+
+1. 有内置执行器，不用调用next
+Generator函数是需要调用next指令来运行异步的语句，async不需要调用next，直接像运行正常的函数那样运行就可以
+
+2. 有更好的语义化
+语义化更明确，相比较于Generator的*和yield，async和await更明确。
+
+3. await后面可以跟promise或者任意类型的值
+yield命令后面只能是 Thunk 函数或 Promise 对象，而async函数的await命令后面，可以是Promise 对象和原始类型的值（数值、字符串和布尔值，但这时等同于同步操作）。
+
+4. 返回一个promise对象，可以调用.then
+async直接返回一个promise对象，可以用then和cache来处理。
+
+async 错误处理方法
+
 ```js
-function f() {
-    return Promise.resolve('TEST');
-}
-
-
-// asyncF 和 f 是等价的
-
-    return 'TEST';
+async function myFunction() {
+    try {
+        await somethingThatReturnsAPromise();
+    } catch (err) {
+        console.log(err);
+    }
 }
 ```
-async function asyncF() {
