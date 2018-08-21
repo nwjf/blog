@@ -116,6 +116,69 @@ yield命令后面只能是 Thunk 函数或 Promise 对象，而async函数的awa
 4. 返回一个promise对象，可以调用.then
 async直接返回一个promise对象，可以用then和cache来处理。
 
+语法
+1. 返回 Promise 对象
+async函数返回一个 Promise 对象
+async函数内部return语句返回的值，会成为then方法回调函数的参数
+
+```js
+async function f() {
+  return 'hello world';
+}
+
+f().then(res => console.log(res)) // "hello world"
+```
+2. async函数内部抛出错误，会导致返回的 Promise 对象变为reject状态。抛出的错误对象会被catch方法回调函数接收到
+
+```js
+async function f() {
+  throw new Error('出错了');
+}
+
+f().then(
+    v => console.log(res),
+    e => console.log(err)
+)
+// Error: 出错了
+```
+
+3. async函数返回的 Promise 对象，必须等到内部所有await命令后面的 Promise 对象执行完，才会发生状态改变，除非遇到return语句或者抛出错误。也就是说，只有async函数内部的异步操作执行完，才会执行then方法指定的回调函数
+
+4. await命令后面是一个 Promise 对象。如果不是，会被转成一个立即resolve的 Promise 对象
+
+```js
+async function f() {
+    return await 'hello word';
+}
+f().then(res => console.log(res)) // hello word
+// await命令的参数是数值123，它被转成 Promise 对象，并立即resolve。
+
+
+async function f() {
+  await Promise.reject('出错了');
+}
+f()
+.then(v => console.log(res))
+.catch(e => console.log(err)) // 出错了
+// await命令后面的 Promise 对象如果变为reject状态，则reject的参数会被catch方法的回调函数接收到
+
+
+async function f() {
+  await Promise.reject('出错了');
+}
+f()
+.then(ret => console.log(ret))
+.catch(err => console.log(err)) // 出错了
+// await语句前面没有return，但是reject方法的参数依然传入了catch方法的回调函数。这里如果在await前面加上return，效果是一样的
+
+
+async function f() {
+  await Promise.reject('出错了');
+  await Promise.resolve('hello world'); // 不会执行
+}
+// 只要一个await语句后面的 Promise 变为reject，那么整个async函数都会中断执行
+```
+
 async 错误处理方法
 
 ```js
