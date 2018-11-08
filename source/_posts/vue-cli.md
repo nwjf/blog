@@ -1,5 +1,5 @@
 ---
-title: Vue入坑之路(一) -- vue-cli
+title: Vue入坑之路(一) -- vue-cli(2.x)
 date: 2018-04-02 22:14:13
 categories: vue
 tags: [js, vue]
