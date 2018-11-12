@@ -134,23 +134,29 @@ eslint配置
 |-- src                         // 源码目录
 |   |-- assets                  // 静态文件，会被webpack处理
 |   |-- components              // vue公共组件
-|   |-- views
+|   |-- views                   // 视图文件
 |   |-- store                   // vuex的状态管理
 |   |-- router                  // 路由文件
 |   |-- App.vue                 // 页面入口文件
 |   |-- main.js                 // 程序入口文件，加载各种公共
-|   |-- router.js
-|   |-- store.js
+|   |-- router.js               // 路由文件
+|   |-- store.js                // 状态仓库文件
 |   |-- registerServiceWorker.js
 |-- tests
 |   |-- e2e
 |   |-- unit
 |-- .browserslistrc
 |-- .gitignore                  // git上传需要忽略的文件格式
-|-- .eslintrc.js
-|-- babel.config.js
-|-- postcss.config.js
+|-- .eslintrc.js                // eslint配置
+|-- babel.config.js             // babel配置
+|-- postcss.config.js           // postcss配置
 |-- cypress.json
 |-- package.json                // 项目基本信息
 |-- package-lock.json
 ```
+
+
+### vue ui
+
+vue ui完全是可视化的创建项目。
+就不在多说了，傻子都能创建出来项目
