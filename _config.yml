@@ -6,7 +6,7 @@
 title: 墨痕 #网站标题
 subtitle: 用墨记录成长的痕迹 #网站副标题
 description: 用心去分享 #描述
-keywords: html,css,js,vue,php # 关键字
+keywords: html,css,js,vue,php,java # 关键字
 author: wjf #作者
 language: zh-Hans #语言
 timezone: #网站时区。Hexo 默认使用您电脑的时区。时区列表。比如说：America/New_York, Japan, 和 UTC 。

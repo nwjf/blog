@@ -1,11 +1,11 @@
 ---
 title: Vue -- vue-cli(3.x)
-date: 2018-011-02 16:14:13
+date: 2019-02-15 16:14:13
 categories: vue
 tags: [js, vue]
 ---
 
-不知不觉中vuecli都升级到3.x了，感觉看来下文档来学习下
+不知不觉中vue-cli都升级到3.x了，赶快看下文档来学习下
 
 ## 第一步升级
 
@@ -87,7 +87,7 @@ css预处理
 eslint配置
 ```yml
 ? Pick a linter / formatter config: (Use arrow keys)
-> ESLint with error prevention only
+> ESLint with error prevention only // 仅防止错误
   ESLint + Airbnb config
   ESLint + Standard config
   ESLint + Prettier
@@ -128,7 +128,7 @@ eslint配置
 
 新建项目结束
 项目结构
-```
+```js
 |-- public                      
 |   |-- index.html
 |-- src                         // 源码目录
