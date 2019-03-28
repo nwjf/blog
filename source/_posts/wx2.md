@@ -19,6 +19,9 @@ component组件则有自己的业务逻辑，可以看做一个独立的page页�
 
 项目结构
 ```js
+|-- app.js      // 小程序逻辑文件
+|-- app.json    // 小程序公共配置文件
+|-- app.wxss    // 小程序公共样式文件
 |-- images      // 存储图片资源
 |-- pages       // 页面视图
 |   |-- index   // index页面
@@ -27,10 +30,10 @@ component组件则有自己的业务逻辑，可以看做一个独立的page页�
 |       |-- index.js
 |       |-- index.json
 
-|-- template         //template模板视图
+|-- templates         //template模板视图
 |   |-- list.wxml    // list模板
 
-|-- component       // component组件文件夹
+|-- components       // component组件文件夹
 |   |-- pop         // pop组件文件
 |       |-- pop.wxml
 |       |-- pop.wxss
@@ -38,7 +41,7 @@ component组件则有自己的业务逻辑，可以看做一个独立的page页�
 |       |-- pop.json
 ```
 
-### 模板（template）
+## 模板（template）
 
 建议创建单独的文件夹template；
 
@@ -64,29 +67,34 @@ name: 定义模板的名称，调用的时候用到
 
 调用
 ```html
+<!-- path: /pages/index/index.wxml -->
 <!-- 引入模板文件 -->
-<import src="../template/pop">
+<import src="/templates/pop"/>
 <!-- 通过template调用pop模板，通过data传入数据 -->
-<template is="pop" data="{{data}}">
+<template is="pop" data="{{data}}"/>
+```
+```css
+/* path: /pages/index/index.wxss */
+@import "/templates/list/list.wxss";
 ```
 
 模板有自己的作用域，只能通过data出入数据
 
 
-### 组件（component）
+## 组件（component）
 
 component组件和普通视图页面一样
-同样具有，wxml，wxss，js，json文件
+同样具有wxml，wxss，js，json文件
 与页面不一样的是，Component中的构造函数（也可以称构造器）是Component({})，而页面中的构造函数是Page({})。
 
 wxml,wxss和page中的wxml，wxss一样，就不在多说
 
-### js文件
+## js文件
 
 小程序通过component构造器来实现
 
 ```js
-// path:  /component/pop/pop.js
+// path:  /components/pop/pop.js
 Component({
     // 对外的属性，父组件传过来的参数存放地方
     properties： {
@@ -122,6 +130,7 @@ Component({
     // 组件关系,组件之间联系属性
     relations: {},
     externalClasses: [],
+    // 其他方法使用相对较少
 })
 ```
 ```json
@@ -144,7 +153,7 @@ Component({
 ```
 >path: /page/index/index.wxml
 ```html
-<pop></pop>
+<pop\>
 ```
 >path: /page/index/index.wxss
 ```css
