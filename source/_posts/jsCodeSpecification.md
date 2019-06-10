@@ -2,7 +2,7 @@
 title: JS开发规范
 date: 2019-06-10 18:36:50
 categories: 规范
-tags: [规范]
+tags: [规范, js]
 ---
 
 ## 前言
@@ -10,7 +10,7 @@ tags: [规范]
 本文档的目标是是JavaScript代码风格保持一致，容易被理解和被维护。
 
 ## 项目规范
-- 项目必须由 README.md 描述文件
+- 项目必须有 README.md 描述文件
     - 项目描述
     - 引用技术描述
     - 代码风格描述
@@ -106,6 +106,7 @@ callback(a , b) ;
 callback(params1, params2, params3);
 list(this.data[this.arr[i]]);
 if (length > arr.length) {}
+
 // bad
 callback( params1, params2, params3 );
 list( this.data[ this.arr[ i ] ] );
@@ -138,7 +139,7 @@ var obj = {
     , sex: 1
 };
 ```
-- import语句中{}内侧紧贴括号部分不允许由空格
+- import语句中{}内侧紧贴括号部分不允许有空格
 ```js
 // good
 import {mapGetters, mapState} from 'vuex';
@@ -184,14 +185,20 @@ var html = [
 ```js
 // good
 setTimeout(
-    function () {},
+    function () {
+        console.log('setTimeout');
+    },
     300
 );
+// bad
+setTimeout(function() {
+    console.log('setTimeout');
+}, 1000);
 ```
 
 链式操作
 - 链式调用较长时采用缩进进行调整
-- 三元运算符由三部分组成，因此其换行应当耿军每个部分的长度不同，形成不同的情况
+- 三元运算符由三部分组成，因此其换行应当对于每个部分的长度不同，形成不同的情况
 
 ```js
 // good
@@ -223,6 +230,18 @@ var array = [
 - 不得省略语句结束的分号
 - 在if /else / for / do / while语句中，即使只有一行，也不得省略{}
 - 函数定义结束不允许添加分号
+```js
+// good
+var name = '';
+if (true) {
+    name = '';
+}
+function test() {}
+// bad
+var name = ''
+if (true) name = '';
+function test() {};
+```
 
 ## 命名
 
@@ -241,6 +260,7 @@ var array = [
 ```js
 // good
 let userName = '';
+let isTrue = true;
 const PI = 3.14;
 const USER_NAME = '';
 function getStyle() {}
@@ -248,6 +268,7 @@ class Test {}
 
 // good
 var name = ''
+
 // bad
 name = '';
 
@@ -276,8 +297,8 @@ name = '';
 |RegExp          |{RegExp}              ||
 |Array           |{Array}               ||
 |Date            |{Date}                ||
-|单一类型集合     |{Array\<string\>}     ||
-|多类型           |{number \| boolean}   |可能时number类型也可能时boolean类型|
+|单一类型集合     |{Array<string>}     ||
+|多类型           |{number/boolean}   |可能时number类型也可能时boolean类型|
 |任意类型         |{*}                   |任意类型|
 
 
