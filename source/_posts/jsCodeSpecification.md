@@ -1,13 +1,13 @@
 ---
-title: JS开发规范
+title: JavaScript开发规范
 date: 2019-06-10 18:36:50
 categories: 规范
-tags: [规范, js]
+tags: [规范, JavaScript]
 ---
 
 ## 前言
 
-本文档的目标是是JavaScript代码风格保持一致，容易被理解和被维护。
+本文档的目标是JavaScript代码风格保持一致，容易被理解和被维护。
 
 ## 项目规范
 - 项目必须有 README.md 描述文件
@@ -275,6 +275,99 @@ name = '';
 ```
 
 - 尽量使用 ===，!==，不适用== ，!=，仅当判断null或undefined时允许使用==null
+
+## 循环
+
+- 不要在循环体中包含函数表达式，事先将函数提取到循环体外。
+- 对有序集合遍历时，缓存length
+    - 虽然浏览器都对数组长度进行了缓存，但对于一些宿主对象和老旧浏览器的数组对象，在每次length访问时会动态计算元素个数，此时缓存length能有效提高程序性能
+
+```js
+// good
+for (var i = 0, len = elements.length; i < len; i++) {
+
+}
+```
+
+## 类型
+
+### 类型检测
+
+- 类型检测优先使用typeof。对象类型检测使用instanceof。 null或undefined使用==null
+
+```js
+typeof variable === 'string'; // string
+typeof variable === 'number'; // number
+typeof variable === 'boolean'; // boolean
+typeof variable === 'function'; // Function
+typeof variable === 'object'; // Object
+
+variable instanceof RegExp; // RegExp;
+variable instanceof Array; // Array
+
+variable === null; // null
+variable === 'undefined'; // undefined;
+variable == null; // null or undefined;
+```
+
+### 类型转换
+
+- 转换为string时，使用+''。
+
+```js
+// good
+num + '';
+```
+- 转换为number时，通常使用+。
+
+```js
+// good
++str;
+// bad
+Number(str);
+```
+
+- string 转换为 number ，要转换的字符串结尾包含非数字并期望忽略时，使用 parseInt。
+- 使用 parseInt 时，必须制定进制
+
+```js
+// good
+var width = '200px';
+parseInt(width, 10);
+// bad
+parseInt(width);
+```
+
+- number 去除小数点， 使用Math.floor / Math.round / Math.ceil，不使用 parseInt
+
+```js
+// good
+var num = 3.14;
+Math.ceil(num);
+// bad
+parseInt(num, 10);
+```
+
+## 闭包
+
+- 建议在适当的时候将闭包内大对象设置为null
+
+    <br>
+    在JavaScript中，无需特别的关键词就可以使用闭包，一个函数可以任意访问在其定义的作用域外的变量。需要注意的时，函数的作用域时静态的，即在定义时决定，与调用的时机和方式没有任何关系。
+
+    闭包会阻止一些变量的垃圾回收，对于较老旧的JavaScript引擎，可能导致外部所有变量均无法回收。
+
+    以下内容会影响到闭包内变量的回收：
+
+    - 嵌套的函数中是否有使用的变量
+    - 嵌套的函数中是否有 直接调用eval
+    - 是否使用with表达式
+
+    Chakra、V8和SpiderMonkey将受以上因素的影响，表现出不尽相同又较相似的回收策略，而JScript.dll和Carakan则完全没有这方面的优化，会完全整个LexicalEnvironment中的所有变量绑定，造成一定的内存消耗。
+
+    如果有非常庞大的对象，切预计会在老旧的引擎中执行，则使用闭包时，注意将闭包不需要的对象设置为空引用。
+
+
 
 ## 注释
 
