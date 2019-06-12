@@ -2,7 +2,7 @@
 title: Vue2.0源码分析（一）
 date: 2018-05-30 18:36:50
 categories: vue
-tags: [js, vue]
+tags: [JavaScript, vue]
 ---
 
 学习源码是一个漫长的路，为什么学习源码我就不在多做解释，如果有人对这个又纠结请自行查阅。

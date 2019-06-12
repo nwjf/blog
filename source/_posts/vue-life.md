@@ -1,8 +1,8 @@
 ---
-title: Vue入坑之路(三) -- vue生命周期钩子
+title: Vue(三) -- vue生命周期钩子
 date: 2018-05-08 22:36:17
 categories: vue
-tags: [js, vue]
+tags: [JavaScript, vue]
 ---
 
 生命周期：Vue 实例从开始创建、初始化数据、编译模板、挂载Dom→渲染、更新→渲染、卸载等一系列过程，我们称这是 Vue 的生命周期，各个阶段有相对应的事件钩子

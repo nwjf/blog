@@ -1,8 +1,8 @@
 ---
-title: Vue -- vue-cli(3.x)
+title: Vue(五) -- vue-cli(3.x)
 date: 2019-02-15 16:14:13
 categories: vue
-tags: [js, vue]
+tags: [JavaScript, vue]
 ---
 
 不知不觉中vue-cli都升级到3.x了，赶快看下文档来学习下

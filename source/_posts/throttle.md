@@ -1,8 +1,8 @@
 ---
 title: 优化之路-js函数防抖与函数节流
 date: 2018-08-13 20:10:13
-categories: js
-tags: [js, 优化]
+categories: JavaScript
+tags: [JavaScript, 优化]
 ---
 
 #### 函数防抖（debounce）

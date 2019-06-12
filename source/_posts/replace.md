@@ -1,8 +1,8 @@
 ---
 title: replace方法深入学习
 date: 2018-03-03 22:27:43
-categories: js
-tags: js
+categories: JavaScript
+tags: JavaScript
 ---
 前几天朋友问到一个聊天系统，需要代替 [表情] ,趁这次机会仔细研究了replace方法,分享下js的replace用法。
 ### 初级篇

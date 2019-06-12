@@ -2,7 +2,7 @@
 title: 微信小程序（一）---生命周期
 date: 2018-05-30 18:36:50
 categories: 微信小程序
-tags: [js, 微信小程序]
+tags: [JavaScript, 微信小程序]
 ---
 ### 生命周期图
 

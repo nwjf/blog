@@ -1,8 +1,8 @@
 ---
 title: 'js异步 -- Promise 与 Async / Await'
 date: 2018-08-14 11:10:13
-categories: js
-tags: [js, ES6, ES7]
+categories: JavaScript
+tags: [JavaScript, ES6, ES8]
 ---
 
 #### Promise

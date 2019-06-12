@@ -1,8 +1,8 @@
 ---
 title: 你必须要懂的 ES6 语法
 date: 2018-03-20 08:36:50
-categories: js
-tags: [js, ES6, ES2015]
+categories: JavaScript
+tags: [JavaScript, ES6, ES2015]
 ---
 
 ### 简介

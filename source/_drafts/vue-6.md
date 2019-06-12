@@ -2,7 +2,7 @@
 title: Vue入坑之路(六) -- 多页面
 date: 2018-09-01 11:14:13
 categories: vue
-tags: [js, vue]
+tags: [JavaScript, vue]
 ---
 
 vue是单页面开发模式（spa）

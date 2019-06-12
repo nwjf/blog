@@ -2,7 +2,7 @@
 title: 微信小程序-template / component
 date: 2019-3-1 14:17:17
 categories: 微信小程序
-tags: [js, 微信小程序]
+tags: [JavaScript, 微信小程序]
 ---
 
 技术的不断发展与革新，最根本的体现于提高用户体验，减少码农们的工作量。

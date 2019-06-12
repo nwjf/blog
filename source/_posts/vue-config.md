@@ -1,8 +1,8 @@
 ---
-title: Vue入坑之路(二) -- 项目配置
+title: Vue(二) -- 项目配置
 date: 2018-04-06 12:21:28
 categories: vue
-tags: [js, vue]
+tags: [JavaScript, vue]
 ---
 
 
