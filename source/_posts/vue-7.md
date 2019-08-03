@@ -1,7 +1,7 @@
 ---
 title: Vue(六) -- v-model
 date: 2019-06-26 13:01:11
-categories: Vue
+categories: vue
 tags: [JavaScript, Vue]
 ---
 
