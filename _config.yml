@@ -14,7 +14,7 @@ timezone: #网站时区。Hexo 默认使用您电脑的时区。时区列表。�
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://yoursite.com #站点url
-root: /blog #站点根目录
+root: / #站点根目录
 permalink: :title/ #文章的云就链接格式
 permalink_defaults: #永久链接中各部分的默认值
 
