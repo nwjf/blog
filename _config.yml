@@ -79,6 +79,6 @@ theme: hexo-theme-next #主题名称
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git #类型，常用的git 
-  repository: git@github.com:nwjf/nwjf.github.io.git
+  repo: git@github.com:nwjf/blog.git
   branch: master
 
