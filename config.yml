@@ -1,7 +1,7 @@
 baseURL: /
 languageCode: zh-cn
 title: blog
-theme: hugo-paper # 主题名字，和themes文件夹下的一致
+theme: paper # 主题名字，和themes文件夹下的一致
 languages:
   en:
     languageName: "English"
@@ -16,14 +16,14 @@ languages:
       imageWidth: 150
       imageHeight: 150
       buttons:
-        - name: 文章
-          url: posts
-        - name: 标签
-          url: tags
+        # - name: 文章
+        #   url: posts
+        # - name: 标签
+        #   url: tags
         - name: 关于
           url: about
-        - name: 友情链接
-          url: links
+        # - name: 友情链接
+        #   url: links
     menu:
       main:
         - identifier: home
@@ -34,22 +34,22 @@ languages:
           name: 文章
           url: /posts
           weight: 3
-        - identifier: tags
-          name: 标签
-          url: /tags
-          weight: 15
-        - identifier: archives
-          name: 时间轴
-          url: /archives
-          weight: 20
+        # - identifier: tags
+        #   name: 标签
+        #   url: /tags
+        #   weight: 15
+        # - identifier: archives
+        #   name: 时间轴
+        #   url: /archives
+        #   weight: 20
         - identifier: about
           name: 关于
           url: /about
           weight: 50
-        - identifier: links
-          name: 友链
-          url: /links
-          weight: 60
+        # - identifier: links
+        #   name: 友链
+        #   url: /links
+        #   weight: 60
 
 outputs:
   home:
