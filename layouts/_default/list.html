@@ -1,132 +1,78 @@
-{{- define "main" }}
+{{ define "main" }}
 
-{{- if (and .Site.Params.profileMode.enabled .IsHome) }}
-{{- partial "index_profile.html" . }}
-{{- else }} {{/* if not profileMode */}}
+<!-- Tag Title -->
+{{ if and .Title (eq .Type "tags") }}
+<h1 class="mb-16">#{{ .Title }}</h1>
+{{ end }}
 
-{{- if not .IsHome | and .Title }}
-<header class="page-header">
-  {{- partial "breadcrumbs.html" . }}
-  <h1>{{ .Title }}</h1>
-  {{- if .Description }}
-  <div class="post-description">
-    {{ .Description | markdownify }}
+<!-- $pages -->
+{{ $pages := union .RegularPages .Sections }}<!---->
+{{ if .IsHome }}<!---->
+{{ $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}<!---->
+{{ end }}
+
+<!-- Articles -->
+{{ $paginator := .Paginate $pages }} {{ range $index, $page := $paginator.Pages
+}}<!---->
+
+<!-- avatar -->
+{{ if and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0) }}<!---->
+
+{{ $avatar_url := $.Scratch.Get "avatar_url" }}<!---->
+{{ if or $avatar_url site.Params.name }}
+<div class="-mt-2 mb-16 flex items-center">
+  {{ if $avatar_url }}
+  <div
+    class="mr-5 shrink-0 rounded-full border-[0.5px] border-black/10 bg-white/50 p-3 shadow dark:bg-white/[15%]"
+  >
+    <img
+      class="my-0 aspect-square w-16 rounded-full !bg-black/5 hover:animate-spin dark:!bg-black/80"
+      src="{{ $avatar_url }}"
+      alt="{{ site.Params.name | default site.Title }}"
+    />
   </div>
-  {{- end }}
-</header>
-{{- end }}
-
-{{- if .Content }}
-<div class="post-content">
-  {{- if not (.Param "disableAnchoredHeadings") }}
-  {{- partial "anchored_headings.html" .Content -}}
-  {{- else }}{{ .Content }}{{ end }}
+  {{ end }}<!---->
+  {{ if site.Params.name }}
+  <div>
+    <h1 class="mb-2 mt-3 text-[1.6rem] font-bold">{{ site.Params.name }}</h1>
+    <div class="break-words">
+      {{ site.Params.bio | default (print `A personal blog by `
+      site.Params.name) }}
+    </div>
+  </div>
+  {{ end }}
 </div>
-{{- end }}
+{{ end }}<!---->
 
-{{- $pages := union .RegularPages .Sections }}
+{{ end }}
 
-{{- if .IsHome }}
-{{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
-{{- end }}
+<section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
+  {{ if gt .Weight 0 }}
+  <span
+    class="mb-2 ml-px inline-block text-[0.8rem] font-medium uppercase tracking-wider text-[#ff3b2d] opacity-70"
+    >Featured</span
+  >
+  {{ end }}
+  <h2 class="!my-0 pb-1 font-bold !leading-none">{{ .Title }}</h2>
+  <time class="text-sm antialiased opacity-60"
+    >{{ .Date | time.Format ":date_medium" }}</time
+  >
+  <a class="absolute inset-0 text-[0]" href="{{ .Permalink }}">{{ .Title }}</a>
+</section>
+{{ end }}
 
-{{- $paginator := .Paginate $pages }}
+<!-- Main Nav -->
+{{ if gt $paginator.TotalPages 1 }}
+<nav class="mt-16 flex">
+  {{ if $paginator.HasPrev }}
+  <a class="btn" href="{{ $paginator.Prev.URL }}">← {{ i18n "prev_page" }}</a>
+  {{ end }}<!---->
+  {{ if $paginator.HasNext }}
+  <a class="btn ml-auto" href="{{ $paginator.Next.URL }}"
+    >{{ i18n "next_page" }} →</a
+  >
+  {{ end }}
+</nav>
+{{ end }}<!---->
 
-{{- if and .IsHome .Site.Params.homeInfoParams (eq $paginator.PageNumber 1) }}
-{{- partial "home_info.html" . }}
-{{- end }}
-
-{{- $term := .Data.Term }}
-{{- range $index, $page := $paginator.Pages }}
-
-{{- $class := "post-entry" }}
-
-{{- $user_preferred := or .Site.Params.disableSpecial1stPost .Site.Params.homeInfoParams }}
-{{- if (and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0) (not $user_preferred)) }}
-{{- $class = "first-entry" }}
-{{- else if $term }}
-<!-- {{- $class = "post-entry tag-entry" }} -->
-{{- $class = "post-entry" }}
-{{- end }}
-
-<article class="{{ $class }}">
-  <div class="post-info">
-    <header class="entry-header">
-      <h2>
-        {{- .Title }}
-        {{- if .Draft }}<sup><span class="entry-isdraft">&nbsp;&nbsp;[draft]</span></sup>{{- end }}
-      </h2>
-    </header>
-    {{- if (ne (.Param "hideSummary") true) }}
-    <section class="entry-content">
-      <p>
-        {{- if .Description }}
-        {{ .Description }}
-        {{- end }}
-        <!-- {{ .Summary | plainify | htmlUnescape }} -->
-        {{ if .Truncated }}...{{ end }}
-      </p>
-    </section>
-    {{- end }}
-    {{- if not (.Param "hideMeta") }}
-    <footer class="entry-footer">
-      {{- partial "post_meta.html" . -}}
-    </footer>
-    {{- end }}
-  </div>
-  {{- $isHidden := (.Site.Params.cover.hidden | default .Site.Params.cover.hiddenInList) }}
-  {{- partial "cover.html" (dict "cxt" . "IsHome" true "isHidden" $isHidden) }}
-  <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
-</article>
-{{- end }}
-
-<br />
-<br />
-
-{{- if gt $paginator.TotalPages 1 }}
-<footer class="page-footer">
-  <nav class="pagination">
-    <!--    {{- if $paginator.HasPrev }}-->
-    <!--    <a class="prev" href="{{ $paginator.Prev.URL | absURL }}">{{ i18n "prev_page" }}</a>-->
-    <!--    {{- end }}-->
-
-    {{- if not (eq $paginator.PageNumber 1) }}
-    <span class="numFirst">
-        <a class="pageFirst" href="{{ $paginator.First.URL | absURL }}">{{ "1" }}</a>
-      </span>
-    {{- if not (eq $paginator.PageNumber 2) }}
-    &nbsp;...&nbsp;
-    <span class="numPrev">
-            <a class="pagePrev" href="{{ $paginator.Prev.URL | absURL }}">{{ sub $paginator.PageNumber 1 }}</a>
-          </span>
-    {{- end }}
-    {{- end }}
-
-    <span class="pageNum">
-      <a class="pageNow" href="{{ $paginator.URL | absURL }}">{{ $paginator.PageNumber }}</a>
-    </span>
-
-    {{- if not (eq $paginator.PageNumber $paginator.TotalPages) }}
-    {{- if not (eq $paginator.PageNumber ( sub $paginator.TotalPages 1)) }}
-    <span class="numNext">
-            <a class="pageNext" href="{{ $paginator.Next.URL | absURL }}">{{ add $paginator.PageNumber 1 }}</a>
-          </span>
-    &nbsp;...&nbsp;
-    {{- end }}
-    <span class="numLast">
-        <a class="pageLast" href="{{ $paginator.Last.URL | absURL }}">{{ $paginator.TotalPages }}</a>
-      </span>
-    {{- end }}
-
-    <!--    {{- if $paginator.HasNext }}-->
-    <!--    <a class="next" href="{{ $paginator.Last.URL | absURL }}">{{ i18n "next_page" }}</a>-->
-    <!--    {{- end }}-->
-  </nav>
-</footer>
-{{- end }}
-
-<br />
-
-{{- end }}{{/* end profileMode */}}
-
-{{- end }}{{- /* end main */ -}}
+{{ end }}

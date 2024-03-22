@@ -1,144 +1,130 @@
-{{- define "main" }}
-<style>
-    i[id*="post_meta_style"] {
-        display: flex;
-        align-items: center;
-        margin: 0 0 10px 0;
-    }
-</style>
+{{ define "main" }}
 
-<article class="post-single">
-    <div id="single-content">
-        <header class="post-header">
-            {{ partial "breadcrumbs.html" . }}
-            <h1 class="post-title">
-                {{ .Title }}
-                {{- if .Draft }}<sup><span class="entry-isdraft">&nbsp;&nbsp;[draft]</span></sup>{{- end }}
-            </h1>
-            {{- if .Description }}
-            <div class="post-description">
-                {{ .Description }}
-            </div>
-            {{- end }}
-            {{- if not (.Param "hideMeta") }}
-            <div class="post-meta">
-                {{- partial "post_meta.html" . -}}
-                <span style="opacity: 0.8;">
-                    <span id="post_meta_style_7">
-                        &nbsp;&nbsp;
-                        <span class="fa fa-eye" ></span>
-                        <span>
-                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
-                            &nbsp;&nbsp;
-                        </span>
-                    </span>
-                    <span id="post_meta_style_8">
-                        <span class="fa fa-commenting-o"></span>
-                        <span>
-                            <script src="https://cdn.staticfile.org/twikoo/{{ .Site.Params.twikoo.version }}/twikoo.all.min.js"></script>
-                            <script>
-                                let url = document.documentURI
-                                {{ $baseURL := .Site.BaseURL }}
-                                let dnsUrl = {{ $baseURL }}
-                                let urlSplit = url.split(dnsUrl)
-                                let finalUrl = urlSplit[1]
-                                if (finalUrl[0] !== '/') {
-                                    finalUrl = '/'+finalUrl
-                                }
-                                twikoo.getCommentsCount({
-                                    envId: {{ .Site.Params.twikoo.id }}, // 环境 ID
-                                region: {{ .Site.Params.twikoo.region }}, // 环境地域，默认为 ap-shanghai，如果您的环境地域不是上海，需传此参数
-                                urls: [ // 不包含协议、域名、参数的文章路径列表，必传参数
-                                    // '/2020/10/post-1.html', //填写示例
-                                    finalUrl,
-                                ],
-                                    includeReply: false // 评论数是否包括回复，默认：false
-                                }).then(function (res) {
-                                    let count = res[0].count
-                                    const obj = document.getElementById("comment_count");
-                                    obj.innerText = count
-                                    // 返回示例: [
-                                    //   { url: '/2020/10/post-1.html', count: 10 },
-                                    // ]
-                                }).catch(function (err) {
-                                    // 发生错误
-                                    console.error(err);
-                                });
-                            </script>
-                            <span id="comment_count"></span>
-                        </span>
-                    </span>
-                </span>
-                {{- partial "translation_list.html" . -}}
-                {{- partial "edit_post.html" . -}}
-                {{- partial "post_canonical.html" . -}}
-            </div>
-            {{- end }}
-        </header>
-        {{- $isHidden := .Params.cover.hidden | default .Site.Params.cover.hiddenInSingle | default .Site.Params.cover.hidden }}
-        {{- partial "cover1.html" (dict "cxt" . "IsHome" false "isHidden" $isHidden) }}
-        {{- if (.Param "ShowToc") }}
-        {{- partial "toc.html" . }}
-        {{- end }}
+<article>
+  <header class="mb-16">
+    <h1 class="!my-0 pb-2.5">{{ .Title }}</h1>
 
-        {{- if .Content }}
-        <div class="post-content">
-            {{- if not (.Param "disableAnchoredHeadings") }}
-            {{- partial "anchored_headings.html" .Content -}}
-            {{- else }}{{ .Content }}{{ end }}
-        </div>
-        {{- end }}
-
-        {{- if .Param "reward" }}
-        <div class="post-reward">
-            <div style="padding: 0 0 0 0; margin: 0 0 0 0; width: 100%; font-size:16px; text-align: center;">
-                <div id="QR" style="opacity: 0;">
-                    <div id="wechat" style="display: inline-block">
-                        <a class="fancybox" rel="group">
-                            <img id="wechat_qr" src="{{ .Site.Params.WechatPay | absURL }}" alt="wechat_pay"></a>
-                        <p>微信</p>
-                    </div>
-                    <div id="alipay" style="display: inline-block">
-                        <a class="fancybox" rel="group">
-                            <img id="alipay_qr" src="{{ .Site.Params.Alipay | absURL }}" alt="alipay"></a>
-                        <p>支付宝</p>
-                    </div>
-                </div>
-                <button id="rewardButton"
-                        onclick="
-                    var qr = document.getElementById('QR');
-                    if (qr.style.opacity === '0') {
-                        qr.style.opacity='1';
-                    } else {
-                        qr.style.opacity='0'
-                    }"
-                >
-                    <span>🧧 鼓励</span>
-                </button>
-            </div>
-        </div>
-        {{- end }}
-
-        <footer class="post-footer">
-            <!--{{- if .Params.tags }}
-            <ul class="post-tags">
-                {{- range ($.GetTerms "tags") }}
-                <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
-                {{- end }}
-            </ul>
-            {{- end }}-->
-            {{- if (.Param "ShowPostNavLinks") }}
-            {{- partial "post_nav_links.html" . }}
-            {{- end }}
-            {{- if (and .Site.Params.ShowShareButtons (ne .Params.disableShare true)) }}
-            {{- partial "share_icons.html" . -}}
-            {{- end }}
-        </footer>
+    {{ if ne .Type "page" }}
+    <div class="text-sm antialiased opacity-60">
+      {{ if .Date }}
+      <time>{{ .Date | time.Format ":date_medium" }}</time>
+      {{ end }}<!---->
+      {{ $single_author := or .Params.Author site.Author.name }}
+      <!---->
+      {{ if $single_author }}
+      <span class="mx-1">&middot;</span>
+      <span>{{ $single_author }}</span>
+      {{ end }}
     </div>
+    {{ end }}
+  </header>
 
-    {{- if (.Param "comments") }}
-    {{- partial "comments.html" . }}
-    {{- end }}
+  <section>{{ .Content }}</section>
+
+  <!-- Post Tags -->
+  {{ if .Params.tags }}
+  <footer class="mt-12 flex flex-wrap">
+    {{ range .Params.tags }} {{ $href := print (absURL "tags/") (urlize .) }}
+    <a
+      class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]"
+      href="{{ $href }}"
+      >{{ . }}</a
+    >
+    {{ end }}
+  </footer>
+  {{ end }}
+
+  <!-- Post Nav -->
+  {{ if not site.Params.disablePostNavigation }}<!---->
+  {{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}<!---->
+  {{ if and (gt (len $pages) 1) (in $pages . ) }}
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    {{ with $pages.Next . }}
+    <a
+      class="flex w-1/2 items-center rounded-l-md p-6 pr-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="{{ .Permalink }}"
+      ><span class="mr-1.5">←</span><span>{{ .Name }}</span></a
+    >
+    {{ end }}<!---->
+    {{ with $pages.Prev . }}
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="{{ .Permalink }}"
+      ><span>{{ .Name }}</span><span class="ml-1.5">→</span></a
+    >
+    {{ end }}
+  </nav>
+  {{ end }}<!---->
+  {{ end }}
+
+  <!-- Disqus -->
+  {{ if and site.DisqusShortname (not (eq .Params.comments false)) }}
+  <div class="mt-24" id="disqus_thread"></div>
+  <script>
+    const disqusShortname = '{{ site.DisqusShortname }}';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  {{ end }}
+
+  <!-- GraphComment -->
+  {{ if and site.Params.graphCommentId (not (eq .Params.comments false)) }}
+  <div class="mt-24" id="graphcomment"></div>
+  <script type="text/javascript">
+    var __semio__params = {
+      graphcommentId: '{{ site.Params.graphCommentId  }}',
+      behaviour: {
+        //  uid: "...",
+      },
+      // configure your variables here
+    };
+
+    function __semio__onload() {
+      __semio__gc_graphlogin(__semio__params);
+    }
+
+    (function () {
+      var gc = document.createElement('script');
+      gc.type = 'text/javascript';
+      gc.async = true;
+      gc.onload = __semio__onload;
+      gc.defer = true;
+      gc.src =
+        'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
+      (
+        document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]
+      ).appendChild(gc);
+    })();
+  </script>
+  {{ end }}
+
+  <!-- mermaid -->
+  {{- partial "mermaid.html" . -}}
+
+  <!-- giscus comment -->
+  {{ if and site.Params.giscus.repo (not (eq .Params.comments false)) }}
+  <div class="giscus mt-24"></div>
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="{{ site.Params.giscus.repo }}"
+    data-repo-id="{{ site.Params.giscus.repoId }}"
+    data-category="{{ site.Params.giscus.category }}"
+    data-category-id="{{ site.Params.giscus.categoryId }}"
+    data-mapping="{{ site.Params.giscus.mapping | default (print `pathname`) }}"
+    data-strict="{{ site.Params.giscus.strict | default (print `1`) }}"
+    data-reactions-enabled="{{ site.Params.giscus.reactionsEnabled | default (print `0`) }}"
+    data-emit-metadata="{{ site.Params.giscus.emitMetadata | default (print `0`) }}"
+    data-input-position="{{ site.Params.giscus.inputPosition | default (print `top`) }}"
+    data-theme="{{ site.Params.giscus.theme | default (print `light`) }}"
+    data-lang="{{ site.Params.giscus.lang | default (print `en`) }}"
+    data-loading="{{ site.Params.giscus.loading | default (print `lazy`) }}"
+    crossorigin="anonymous"
+    async
+  ></script>
+  {{ end }}
 </article>
 
-{{- end }}{{/* end main */}}
+{{ end }}

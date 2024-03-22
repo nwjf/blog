@@ -1,152 +1,100 @@
-{{- /* theme-toggle is enabled */}}
-{{- if (not site.Params.disableThemeToggle) }}
-{{- /* theme is light */}}
-{{- if (eq site.Params.defaultTheme "light") }}
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
+<header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
+      href="{{ `` | absURL }}"
+      >{{ site.Title }}</a
+    >
+    <div
+      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer {{ if site.Params.monoDarkIcon }}[background:url(./theme.svg)_left_center/cover_no-repeat] dark:invert{{ else }}[background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)]{{ end }} dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  {{ $bg_color := $.Scratch.Get "bg_color" }}<!---->
+
+  <script>
+    // base
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    // mobile menu
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    // dark theme
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = '{{ $bg_color }}'.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    // init
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
     }
 
-</script>
-{{- /* theme is dark */}}
-{{- else if (eq site.Params.defaultTheme "dark") }}
-<script>
-    if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    }
+    // listen system
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
 
-</script>
-{{- else }}
-{{- /* theme is auto */}}
-<script>
-    (function () {
-        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
-        if(arr = document.cookie.match(reg)) {
-        } else {
-            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
-                document.body.classList.add('dark');
-                localStorage.setItem("pref-theme", 'dark');
-            } else {
-                document.body.classList.remove('dark');
-                localStorage.setItem("pref-theme", 'light');
-            }
-        }
-    })()
+    // manual switch
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
 
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
-</script>
-{{- end }}
-{{- /* theme-toggle is disabled and theme is auto */}}
-{{- else if (and (ne site.Params.defaultTheme "light") (ne site.Params.defaultTheme "dark"))}}
-<script>
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
-
-</script>
-{{- end }}
-
-<header class="header">
-    <nav class="nav">
-        <div class="logo">
-            {{- $label_text := (site.Params.label.text | default site.Title) }}
-            {{- if site.Title }}
-            <a href="{{ "" | absLangURL }}" accesskey="h" title="{{ $label_text }} (Alt + H)">
-            {{- if site.Params.label.icon }}
-            {{- $img := resources.Get site.Params.label.icon }}
-            {{- if $img }}
-            {{- $processableFormats := (slice "jpg" "jpeg" "png" "tif" "bmp" "gif") -}}
-            {{- if hugo.IsExtended -}}
-            {{- $processableFormats = $processableFormats | append "webp" -}}
-            {{- end -}}
-            {{- $prod := (hugo.IsProduction | or (eq site.Params.env "production")) }}
-            {{- if and (in $processableFormats $img.MediaType.SubType) (eq $prod true)}}
-            {{- if site.Params.label.iconHeight }}
-            {{- $img = $img.Resize (printf "x%d" site.Params.label.iconHeight) }}
-            {{ else }}
-            {{- $img = $img.Resize "x30" }}
-            {{- end }}
-            {{- end }}
-            <img src="{{ $img.Permalink }}" alt="logo" aria-label="logo"
-                 height="{{- site.Params.label.iconHeight | default "30" -}}">
-            {{- else }}
-            <img src="{{- site.Params.label.icon | absURL -}}" alt="logo" aria-label="logo"
-                 height="{{- site.Params.label.iconHeight | default "30" -}}">
-            {{- end -}}
-            {{- end -}}
-            {{- $label_text -}}
-            </a>
-            {{- end }}
-            <div class="logo-switches">
-                {{- if (not site.Params.disableThemeToggle) }}
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                         stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                         stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
-                {{- end }}
-
-                {{- $lang := .Lang}}
-                {{- $separator := or $label_text (not site.Params.disableThemeToggle)}}
-                {{- with site.Home.AllTranslations }}
-                <ul class="lang-switch">
-                    {{- if $separator }}<li>|</li>{{ end }}
-                    {{- range . -}}
-                    {{- if ne $lang .Lang }}
-                    <li>
-                        <a href="{{- .Permalink -}}" title="{{ .Language.Params.languageAltTitle | default (.Language.LanguageName | emojify) | default (.Lang | title) }}"
-                           aria-label="{{ .Language.LanguageName | default (.Lang | title) }}">
-                            {{- if (and site.Params.displayFullLangName (.Language.LanguageName)) }}
-                            {{- .Language.LanguageName | emojify -}}
-                            {{- else }}
-                            {{- .Lang | title -}}
-                            {{- end -}}
-                        </a>
-                    </li>
-                    {{- end -}}
-                    {{- end}}
-                </ul>
-                {{- end }}
-            </div>
-        </div>
-        {{- $currentPage := . }}
-        <ul id="menu">
-            {{- range site.Menus.main }}
-            {{- $menu_item_url := (cond (strings.HasSuffix .URL "/") .URL (printf "%s/" .URL) ) | absLangURL }}
-            {{- $page_url:= $currentPage.Permalink | absLangURL }}
-            {{- $is_search := eq (site.GetPage .KeyName).Layout `search` }}
-            <li>
-                <a href="{{ .URL | absLangURL }}" title="{{ .Title | default .Name }} {{- cond $is_search (" (Alt + /)" | safeHTMLAttr) ("" | safeHTMLAttr ) }}"
-                {{- cond $is_search (" accesskey=/" | safeHTMLAttr) ("" | safeHTMLAttr ) }}>
-                <span {{- if eq $menu_item_url $page_url }} class="active" {{- end }}>
-                        {{- .Pre }}
-                        {{- .Name -}}
-                        {{ .Post -}}
-                    </span>
-                </a>
-            </li>
-            {{- end }}
-        </ul>
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    {{ $url := .RelPermalink }}<!---->
+    {{ with site.Menus.main }}
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      {{ range . }}
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="{{ .URL }}"
+        >{{ .Name }}</a
+      >
+      {{ end }}
     </nav>
+    {{ end }}<!---->
+
+    {{ with $.Scratch.Get "social_list" }}
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+    >
+      {{ range . }}<!---->
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./{{ . }}.svg)"
+        href="{{ if eq . `rss` }}{{ `index.xml` | absURL }}{{ else if eq . `mastodon` }}{{ index site.Params . }}{{ else }}https://{{ . }}.com/{{ if eq . `linkedin` }}in/{{ end }}{{ index site.Params . }}{{ end }}"
+        target="_blank"
+        rel="{{ if eq . `rss` }}alternate{{ else }}me{{ end }}"
+      >
+        {{ . }}
+      </a>
+      {{ end }}<!---->
+    </nav>
+    {{ end }}<!---->
+  </div>
 </header>
